@@ -5,10 +5,16 @@
  ******************************************************************************/
 package gengine;
 
+// external
+
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 
+//internal
+import util.Time;
+
+//static
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -86,21 +92,22 @@ public class Window {
 
 
 	public void loop () {
+		float beginTime = Time.getTime();
+		float endTime;
+		float dt = -1.0f;
+
 		while (!glfwWindowShouldClose(glfwWindow)) {
+			// Poll events
 			glfwPollEvents();
+
 			glClearColor(r, g, b, a);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			if (fadeToBlack) {
-				r = Math.max(r - 0.01f, 0);
-				g = Math.max(g - 0.01f, 0);
-				b = Math.max(b - 0.01f, 0);
-			}
-
-			if (KeyListener.isKeyPressed(GLFW_KEY_SPACE)) {
-				fadeToBlack = true;
-			}
 			glfwSwapBuffers(glfwWindow);
+
+			endTime = Time.getTime();
+			dt = endTime - beginTime;
+			beginTime = endTime;
 		}
 	}
 }
