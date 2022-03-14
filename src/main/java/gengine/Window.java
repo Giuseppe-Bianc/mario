@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  2022/3/13
+ Copyright (c)  2022/3/14
  Giuseppe Bianconi
 
  ******************************************************************************/
@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL;
 import util.Time;
 
 //static
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -24,12 +25,13 @@ public class Window {
 	private final int height;
 	private final String title;
 	private long glfwWindow;
-	private float r;
-	private float g;
-	private float b;
-	private float a;
+	public float r;
+	public float g;
+	public float b;
+	public float a;
 	private boolean fadeToBlack = false;
 	private static Window window = null;
+	private static Scene currentScene;
 
 	private Window () {
 		this.width = 960;
@@ -51,10 +53,26 @@ public class Window {
 		return Window.window;
 	}
 
+	public static void changeScene (int newScene) {
+		switch (newScene) {
+			case 0:
+				currentScene = new LevelEditorScene();
+				break;
+			case 1:
+				currentScene = new LevelScene();
+				break;
+			default:
+				assert false : "Unknown scene '" + newScene + "'";
+				break;
+		}
+	}
+
+
 	public void run () {
 		System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 		init();
 		loop();
+		glfwFreeCallbacks(glfwWindow);
 		glfwDestroyWindow(glfwWindow);
 		glfwTerminate();
 		glfwSetErrorCallback(null).free();
@@ -88,6 +106,7 @@ public class Window {
 		glfwSwapInterval(1);
 		glfwShowWindow(glfwWindow);
 		GL.createCapabilities();
+		Window.changeScene(0);
 	}
 
 
@@ -102,6 +121,10 @@ public class Window {
 
 			glClearColor(r, g, b, a);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			if (dt >= 0) {
+				currentScene.update(dt);
+			}
 
 			glfwSwapBuffers(glfwWindow);
 
