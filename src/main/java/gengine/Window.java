@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  15/03/22, 01:30  Giuseppe-Bianc
+ Copyright (c)  15/03/22, 22:17  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -65,9 +65,11 @@ public class Window {
 		switch (newScene) {
 			case 0:
 				currentScene = new LevelEditorScene();
+				currentScene.init();
 				break;
 			case 1:
 				currentScene = new LevelScene();
+				currentScene.init();
 				break;
 			default:
 				assert false : "Unknown scene '" + newScene + "'";

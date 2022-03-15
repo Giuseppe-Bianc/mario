@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  15/03/22, 01:31  Giuseppe-Bianc
+ Copyright (c)  15/03/22, 22:17  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -16,9 +16,7 @@ package gengine;
 public class LevelScene extends Scene {
 	public LevelScene () {
 		System.out.println("Inside level scene");
-		Window.get().r = 1;
-		Window.get().g = 1;
-		Window.get().b = 1;
+		Window.get().r = Window.get().g = Window.get().b = 1;
 	}
 
 	@Override
