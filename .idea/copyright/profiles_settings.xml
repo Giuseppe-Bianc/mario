@@ -7,8 +7,11 @@
       <option name="prefixLines" value="false" />
     </LanguageOptions>
     <LanguageOptions name="__TEMPLATE__">
+      <option name="addBlankAfter" value="false" />
       <option name="separateBefore" value="true" />
       <option name="separateAfter" value="true" />
+      <option name="lenBefore" value="90" />
+      <option name="lenAfter" value="90" />
     </LanguageOptions>
   </settings>
 </component>
