@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  16/03/22, 22:28  Giuseppe-Bianc
+ Copyright (c)  16/03/22, 22:40  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -10,7 +10,7 @@
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
 
- ******************************************************************************//
+ ******************************************************************************/
 package renderer;
 
 import org.joml.*;
@@ -69,18 +69,13 @@ public class Shader {
 	}
 
 	public void compile () {
-		// ============================================================
-		// Compile and link shaders
-		// ============================================================
 		int vertexID, fragmentID;
 
-		// First load and compile the vertex shader
 		vertexID = glCreateShader(GL_VERTEX_SHADER);
 		// Pass the shader source to the GPU
 		glShaderSource(vertexID, vertexSource);
 		glCompileShader(vertexID);
 
-		// Check for errors in compilation
 		int success = glGetShaderi(vertexID, GL_COMPILE_STATUS);
 		if (success == GL_FALSE) {
 			int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
@@ -89,13 +84,10 @@ public class Shader {
 			assert false : "";
 		}
 
-		// First load and compile the vertex shader
 		fragmentID = glCreateShader(GL_FRAGMENT_SHADER);
-		// Pass the shader source to the GPU
 		glShaderSource(fragmentID, fragmentSource);
 		glCompileShader(fragmentID);
 
-		// Check for errors in compilation
 		success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
 		if (success == GL_FALSE) {
 			int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
@@ -104,13 +96,11 @@ public class Shader {
 			assert false : "";
 		}
 
-		// Link shaders and check for errors
 		shaderProgramID = glCreateProgram();
 		glAttachShader(shaderProgramID, vertexID);
 		glAttachShader(shaderProgramID, fragmentID);
 		glLinkProgram(shaderProgramID);
 
-		// Check for linking errors
 		success = glGetProgrami(shaderProgramID, GL_LINK_STATUS);
 		if (success == GL_FALSE) {
 			int len = glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH);
@@ -122,7 +112,6 @@ public class Shader {
 
 	public void use () {
 		if (!beingUsed) {
-			// Bind shader program
 			glUseProgram(shaderProgramID);
 			beingUsed = true;
 		}
