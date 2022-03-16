@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  15/03/22, 01:29  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 00:20  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -16,7 +16,7 @@ package util;
 public class Time {
 	public static float timeStarted = System.nanoTime();
 
-	public static float getTime () {
+	public static float getTime() {
 		return (float) ((System.nanoTime() - timeStarted) * 1E-9);
 	}
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  15/03/22, 01:31  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 00:20  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -13,18 +13,17 @@
  ******************************************************************************/
 package gengine;
 
-import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
-import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
+import static org.lwjgl.glfw.GLFW.*;
 
 public class KeyListener {
 	private static KeyListener instance;
 	private boolean keyPressed[] = new boolean[350];
 
-	private KeyListener () {
+	private KeyListener() {
 
 	}
 
-	public static KeyListener get () {
+	public static KeyListener get() {
 		if (KeyListener.instance == null) {
 			KeyListener.instance = new KeyListener();
 		}
@@ -32,7 +31,7 @@ public class KeyListener {
 		return KeyListener.instance;
 	}
 
-	public static void keyCallback (long window, int key, int scancode, int action, int mods) {
+	public static void keyCallback(long window, int key, int scancode, int action, int mods) {
 		if (action == GLFW_PRESS) {
 			get().keyPressed[key] = true;
 		} else if (action == GLFW_RELEASE) {
@@ -40,7 +39,7 @@ public class KeyListener {
 		}
 	}
 
-	public static boolean isKeyPressed (int keyCode) {
+	public static boolean isKeyPressed(int keyCode) {
 		return get().keyPressed[keyCode];
 	}
 }

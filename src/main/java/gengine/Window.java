@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  15/03/22, 22:17  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 00:20  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -18,11 +18,8 @@ package gengine;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
-
-//internal
 import util.Time;
 
-//static
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -33,15 +30,11 @@ public class Window {
 	private final int height;
 	private final String title;
 	private long glfwWindow;
-	public float r;
-	public float g;
-	public float b;
-	public float a;
-	private boolean fadeToBlack = false;
+	public float r, g, b, a;
 	private static Window window = null;
-	private static Scene currentScene;
+	private static gengine.Scene currentScene;
 
-	private Window () {
+	private Window() {
 		this.width = 960;
 		this.height = 540;
 		this.title = "Mario";
@@ -53,7 +46,7 @@ public class Window {
 	 *
 	 * @return Window.window istanza della finestra
 	 */
-	public static Window get () {
+	public static Window get() {
 		if (Window.window == null) {
 			Window.window = new Window();
 		}
@@ -61,14 +54,14 @@ public class Window {
 		return Window.window;
 	}
 
-	public static void changeScene (int newScene) {
+	public static void changeScene(int newScene) {
 		switch (newScene) {
 			case 0:
 				currentScene = new LevelEditorScene();
 				currentScene.init();
 				break;
 			case 1:
-				currentScene = new LevelScene();
+				currentScene = new gengine.LevelScene();
 				currentScene.init();
 				break;
 			default:
@@ -78,29 +71,32 @@ public class Window {
 	}
 
 
-	public void run () {
+	public void run() {
 		System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 		init();
 		loop();
 		glfwFreeCallbacks(glfwWindow);
 		glfwDestroyWindow(glfwWindow);
 		glfwTerminate();
-		glfwSetErrorCallback(null).free();
+		java.util.Objects.requireNonNull(glfwSetErrorCallback(null)).free();
+	}
+
+	private static void setGlfwWindowHint() {
+		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
+		glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 	}
 
 	/**
 	 * responsabile per l' inizializzazione della finestra
 	 */
-	public void init () {
+	public void init() {
 		GLFWErrorCallback.createPrint(System.err).set();
 		if (!glfwInit()) {
 			throw new IllegalStateException("Unable to initialize GLFW.");
 		}
 
 		glfwDefaultWindowHints();
-		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
-		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-		glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
 		glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
 		if (glfwWindow == NULL) {
@@ -120,13 +116,12 @@ public class Window {
 	}
 
 
-	public void loop () {
+	public void loop() {
 		float beginTime = Time.getTime();
 		float endTime;
 		float dt = -1.0f;
 
 		while (!glfwWindowShouldClose(glfwWindow)) {
-			// Poll events
 			glfwPollEvents();
 
 			glClearColor(r, g, b, a);

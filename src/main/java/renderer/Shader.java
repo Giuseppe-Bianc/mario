@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  16/03/22, 22:40  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 00:20  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -31,9 +31,9 @@ public class Shader {
 
 	private String vertexSource;
 	private String fragmentSource;
-	private String filepath;
+	private final String filepath;
 
-	public Shader (String filepath) {
+	public Shader(String filepath) {
 		this.filepath = filepath;
 		try {
 			String source = new String(Files.readAllBytes(Paths.get(filepath)));
@@ -68,7 +68,7 @@ public class Shader {
 		}
 	}
 
-	public void compile () {
+	public void compile() {
 		int vertexID, fragmentID;
 
 		vertexID = glCreateShader(GL_VERTEX_SHADER);
@@ -110,19 +110,19 @@ public class Shader {
 		}
 	}
 
-	public void use () {
+	public void use() {
 		if (!beingUsed) {
 			glUseProgram(shaderProgramID);
 			beingUsed = true;
 		}
 	}
 
-	public void detach () {
+	public void detach() {
 		glUseProgram(0);
 		beingUsed = false;
 	}
 
-	public void uploadMat4f (String varName, Matrix4f mat4) {
+	public void uploadMat4f(String varName, @org.jetbrains.annotations.NotNull Matrix4f mat4) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		FloatBuffer matBuffer = BufferUtils.createFloatBuffer(16);
@@ -130,7 +130,7 @@ public class Shader {
 		glUniformMatrix4fv(varLocation, false, matBuffer);
 	}
 
-	public void uploadMat3f (String varName, Matrix3f mat3) {
+	public void uploadMat3f(String varName, Matrix3f mat3) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		FloatBuffer matBuffer = BufferUtils.createFloatBuffer(9);
@@ -138,37 +138,37 @@ public class Shader {
 		glUniformMatrix3fv(varLocation, false, matBuffer);
 	}
 
-	public void uploadVec4f (String varName, Vector4f vec) {
+	public void uploadVec4f(String varName, Vector4f vec) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform4f(varLocation, vec.x, vec.y, vec.z, vec.w);
 	}
 
-	public void uploadVec3f (String varName, Vector3f vec) {
+	public void uploadVec3f(String varName, Vector3f vec) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform3f(varLocation, vec.x, vec.y, vec.z);
 	}
 
-	public void uploadVec2f (String varName, Vector2f vec) {
+	public void uploadVec2f(String varName, Vector2f vec) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform2f(varLocation, vec.x, vec.y);
 	}
 
-	public void uploadFloat (String varName, float val) {
+	public void uploadFloat(String varName, float val) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform1f(varLocation, val);
 	}
 
-	public void uploadInt (String varName, int val) {
+	public void uploadInt(String varName, int val) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform1i(varLocation, val);
 	}
 
-	public void uploadTexture (String varName, int slot) {
+	public void uploadTexture(String varName, int slot) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform1i(varLocation, slot);

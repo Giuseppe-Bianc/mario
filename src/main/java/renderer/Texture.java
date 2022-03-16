@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  16/03/22, 22:40  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 00:20  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -22,17 +22,21 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImage.*;
 
 public class Texture {
-	private String filepath;
-	private int texID;
+	private final String filepath;
+	private final int texID;
 
-	public Texture (String filepath) {
-		this.filepath = filepath;
-		texID = glGenTextures();
-		glBindTexture(GL_TEXTURE_2D, texID);
+	private void setlTexParameter() {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	}
+
+	public Texture(String filepath) {
+		this.filepath = filepath;
+		texID = glGenTextures();
+		glBindTexture(GL_TEXTURE_2D, texID);
+		this.setlTexParameter();
 
 		IntBuffer width = BufferUtils.createIntBuffer(1);
 		IntBuffer height = BufferUtils.createIntBuffer(1);
@@ -47,7 +51,7 @@ public class Texture {
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0),
 						0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 			} else {
-				assert false : "Error: (Texture) Unknown number of channesl '" + channels.get(0) + "'";
+				assert false : "Error: (Texture) Unknown number of channels '" + channels.get(0) + "'";
 			}
 		} else {
 			assert false : "Error: (Texture) Could not load image '" + filepath + "'";
@@ -56,11 +60,15 @@ public class Texture {
 		stbi_image_free(image);
 	}
 
-	public void bind () {
+	public void bind() {
 		glBindTexture(GL_TEXTURE_2D, texID);
 	}
 
-	public void unbind () {
+	public void unbind() {
 		glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	public String getFilepath() {
+		return filepath;
 	}
 }
