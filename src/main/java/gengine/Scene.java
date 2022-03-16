@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  15/03/22, 22:17  Giuseppe-Bianc
+ Copyright (c)  16/03/22, 22:28  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -10,10 +10,13 @@
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
 
- ******************************************************************************/
+ ******************************************************************************//
 package gengine;
 
 public abstract class Scene {
+
+	protected Camera camera;
+
 	public Scene () {
 
 	}
