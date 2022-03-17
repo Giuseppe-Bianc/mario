@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 11:57  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 14:04  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -25,7 +25,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class LevelEditorScene extends Scene {
+public class LevelEditorScene extends gengine.Scene {
 
 	private int vertexID, fragmentID, shaderProgram;
 
