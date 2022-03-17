@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 14:09  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 20:53  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -24,8 +24,15 @@ import java.nio.file.Paths;
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL20.*;
 
+/**
+ * This class is used to create and upload shaders to the GPU
+ */
 public class Shader {
 
+	private static final String ERR = "ERROR: '";
+	private static final String SPC = "'\n\t", LEND = "\r\n";
+	private static final String SCF = "shader compilation failed.";
+	private static final String TYP = "#type", VRT = "vertex", FRG = "fragment";
 	private int shaderProgramID;
 	private boolean beingUsed = false;
 
@@ -33,31 +40,34 @@ public class Shader {
 	private String fragmentSource;
 	private final String filepath;
 
+	/**
+	 * We are creating a new shader object. We are also setting the filepath of the shader.
+	 */
 	public Shader(String filepath) {
 		this.filepath = filepath;
 		try {
 			String source = new String(Files.readAllBytes(Paths.get(filepath)));
 			String[] splitString = source.split("(#type)( )+([a-zA-Z]+)");
 
-			int index = source.indexOf("#type") + 6;
-			int eol = source.indexOf("\r\n", index);
+			int index = source.indexOf(TYP) + 6;
+			int eol = source.indexOf(LEND, index);
 			String firstPattern = source.substring(index, eol).trim();
 
-			index = source.indexOf("#type", eol) + 6;
-			eol = source.indexOf("\r\n", index);
+			index = source.indexOf(TYP, eol) + 6;
+			eol = source.indexOf(LEND, index);
 			String secondPattern = source.substring(index, eol).trim();
 
-			if (firstPattern.equals("vertex")) {
+			if (firstPattern.equals(VRT)) {
 				vertexSource = splitString[1];
-			} else if (firstPattern.equals("fragment")) {
+			} else if (firstPattern.equals(FRG)) {
 				fragmentSource = splitString[1];
 			} else {
 				throw new IOException("Unexpected token '" + firstPattern + "'");
 			}
 
-			if (secondPattern.equals("vertex")) {
+			if (secondPattern.equals(VRT)) {
 				vertexSource = splitString[2];
-			} else if (secondPattern.equals("fragment")) {
+			} else if (secondPattern.equals(FRG)) {
 				fragmentSource = splitString[2];
 			} else {
 				throw new IOException("Unexpected token '" + secondPattern + "'");
@@ -68,18 +78,20 @@ public class Shader {
 		}
 	}
 
+	/**
+	 * Compile the shaders and link them into a shader program
+	 */
 	public void compile() {
 		int vertexID, fragmentID;
 
 		vertexID = glCreateShader(GL_VERTEX_SHADER);
-		// Pass the shader source to the GPU
 		glShaderSource(vertexID, vertexSource);
 		glCompileShader(vertexID);
 
 		int success = glGetShaderi(vertexID, GL_COMPILE_STATUS);
 		if (success == GL_FALSE) {
 			int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
-			System.out.println("ERROR: '" + filepath + "'\n\tVertex shader compilation failed.");
+			System.out.println(ERR + filepath + SPC + VRT + SCF);
 			System.out.println(glGetShaderInfoLog(vertexID, len));
 			assert false : "";
 		}
@@ -91,7 +103,7 @@ public class Shader {
 		success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
 		if (success == GL_FALSE) {
 			int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
-			System.out.println("ERROR: '" + filepath + "'\n\tFragment shader compilation failed.");
+			System.out.println(ERR + filepath + SPC + FRG + SCF);
 			System.out.println(glGetShaderInfoLog(fragmentID, len));
 			assert false : "";
 		}
@@ -104,7 +116,7 @@ public class Shader {
 		success = glGetProgrami(shaderProgramID, GL_LINK_STATUS);
 		if (success == GL_FALSE) {
 			int len = glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH);
-			System.out.println("ERROR: '" + filepath + "'\n\tLinking of shaders failed.");
+			System.out.println(ERR + filepath + SPC + "Linking of shaders failed.");
 			System.out.println(glGetProgramInfoLog(shaderProgramID, len));
 			assert false : "";
 		}

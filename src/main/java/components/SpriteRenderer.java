@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 14:09  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 20:53  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -18,16 +18,17 @@ import gengine.Component;
 public class SpriteRenderer extends Component {
 
 	private boolean firstTime = false;
+	private static final String IM = "I am ";
 
 	@Override
 	public void start() {
-		System.out.println("I am starting");
+		System.out.println(IM + "starting");
 	}
 
 	@Override
 	public void update(float dt) {
 		if (!firstTime) {
-			System.out.println("I am updating");
+			System.out.println(IM + "updating");
 			firstTime = true;
 		}
 	}

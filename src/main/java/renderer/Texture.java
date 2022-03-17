@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 14:09  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 20:53  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -24,6 +24,7 @@ import static org.lwjgl.stb.STBImage.*;
 public class Texture {
 	private final String filepath;
 	private final int texID;
+	private static final String ERT = "Error: (Texture) ";
 
 	/**
 	 * It sets the texture parameters.
@@ -57,10 +58,10 @@ public class Texture {
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0),
 						0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 			} else {
-				assert false : "Error: (Texture) Unknown number of channels '" + channels.get(0) + "'";
+				assert false : ERT + "Unknown number of channels '" + channels.get(0) + "'";
 			}
 		} else {
-			assert false : "Error: (Texture) Could not load image '" + filepath + "'";
+			assert false : ERT + "Could not load image '" + filepath + "'";
 		}
 
 		stbi_image_free(image);

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 14:09  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 20:53  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -44,6 +44,7 @@ public class LevelEditorScene extends gengine.Scene {
 
 	private int vaoID, vboID, eboID;
 
+	private static final String ASS = "assets/";
 	private Shader defaultShader;
 	private Texture testTexture;
 
@@ -57,9 +58,9 @@ public class LevelEditorScene extends gengine.Scene {
 	@Override
 	public void init() {
 		this.camera = new gengine.Camera(new Vector2f(-200, -300));
-		defaultShader = new Shader("assets/shaders/default.glsl");
+		defaultShader = new Shader(ASS + "shaders/default.glsl");
 		defaultShader.compile();
-		this.testTexture = new Texture("assets/images/testImage.png");
+		this.testTexture = new Texture(ASS + "images/testImage.png");
 		vaoID = glGenVertexArrays();
 		glBindVertexArray(vaoID);
 
