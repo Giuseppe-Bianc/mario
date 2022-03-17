@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 00:20  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 11:57  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,7 +9,6 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
  ******************************************************************************/
 package gengine;
 
@@ -51,6 +50,9 @@ public class LevelEditorScene extends Scene {
 
 	}
 
+	/**
+	 * Initialize the OpenGL state for rendering
+	 */
 	@Override
 	public void init() {
 		this.camera = new gengine.Camera(new Vector2f(-200, -300));
@@ -88,6 +90,13 @@ public class LevelEditorScene extends Scene {
 		glEnableVertexAttribArray(2);
 	}
 
+	/**
+	 * - Upload the texture to the GPU. - Upload the projection and view matrices to the GPU. -
+	 * Upload the time to the GPU. - Bind the VAO. - Enable the vertex and element array attributes.
+	 * - Draw the triangles. - Disable the vertex and element array attributes. - Unbind the VAO
+	 *
+	 * @param dt The time since the last update call.
+	 */
 	@Override
 	public void update(float dt) {
 		defaultShader.use();

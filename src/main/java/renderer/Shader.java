@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 08:56  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 11:57  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,7 +9,6 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
  ******************************************************************************/
 package renderer;
 
@@ -110,6 +109,9 @@ public class Shader {
 		}
 	}
 
+	/**
+	 * If the shader is not being used, then use it
+	 */
 	public void use() {
 		if (!beingUsed) {
 			glUseProgram(shaderProgramID);
@@ -117,11 +119,20 @@ public class Shader {
 		}
 	}
 
+	/**
+	 * Detach the shader from the OpenGL pipeline
+	 */
 	public void detach() {
 		glUseProgram(0);
 		beingUsed = false;
 	}
 
+	/**
+	 * It uploads a 4x4 matrix to the GPU
+	 *
+	 * @param varName The name of the variable in the shader program.
+	 * @param mat4    The matrix to upload.
+	 */
 	public void uploadMat4f(String varName, @org.jetbrains.annotations.NotNull Matrix4f mat4) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
@@ -130,6 +141,12 @@ public class Shader {
 		glUniformMatrix4fv(varLocation, false, matBuffer);
 	}
 
+	/**
+	 * Uploads a 3x3 matrix to the shader
+	 *
+	 * @param varName The name of the variable in the shader program.
+	 * @param mat3    The matrix to upload.
+	 */
 	public void uploadMat3f(String varName, @org.jetbrains.annotations.NotNull Matrix3f mat3) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
@@ -138,36 +155,72 @@ public class Shader {
 		glUniformMatrix3fv(varLocation, false, matBuffer);
 	}
 
+	/**
+	 * Uploads a Vector4f to the shader
+	 *
+	 * @param varName The name of the variable in the shader program.
+	 * @param vec     The vector to upload.
+	 */
 	public void uploadVec4f(String varName, @org.jetbrains.annotations.NotNull Vector4f vec) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform4f(varLocation, vec.x, vec.y, vec.z, vec.w);
 	}
 
+	/**
+	 * Uploads a Vector3f to the shader
+	 *
+	 * @param varName The name of the variable in the shader program.
+	 * @param vec     The vector to upload.
+	 */
 	public void uploadVec3f(String varName, @org.jetbrains.annotations.NotNull Vector3f vec) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform3f(varLocation, vec.x, vec.y, vec.z);
 	}
 
+	/**
+	 * Uploads a Vector2f to the shader
+	 *
+	 * @param varName The name of the variable in the shader program.
+	 * @param vec     The vector to upload.
+	 */
 	public void uploadVec2f(String varName, @org.jetbrains.annotations.NotNull Vector2f vec) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform2f(varLocation, vec.x, vec.y);
 	}
 
+	/**
+	 * Uploads a float value to a uniform variable in the shader program
+	 *
+	 * @param varName The name of the variable to be uploaded.
+	 * @param val     The value to be uploaded.
+	 */
 	public void uploadFloat(String varName, float val) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform1f(varLocation, val);
 	}
 
+	/**
+	 * Uploads an integer value to a uniform variable in the shader program
+	 *
+	 * @param varName The name of the variable in the shader program.
+	 * @param val     The value to be uploaded.
+	 */
 	public void uploadInt(String varName, int val) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform1i(varLocation, val);
 	}
 
+	/**
+	 * Uploads a texture to the GPU
+	 *
+	 * @param varName The name of the variable in the shader program.
+	 * @param slot    The texture slot to bind the texture to.
+	 */
 	public void uploadTexture(String varName, int slot) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();

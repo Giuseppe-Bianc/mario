@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 00:20  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 11:57  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,7 +9,6 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
  ******************************************************************************/
 package renderer;
 
@@ -25,6 +24,9 @@ public class Texture {
 	private final String filepath;
 	private final int texID;
 
+	/**
+	 * It sets the texture parameters.
+	 */
 	private void setlTexParameter() {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -32,6 +34,9 @@ public class Texture {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	}
 
+	/**
+	 * It loads an image from a filepath and creates a texture from it.
+	 */
 	public Texture(String filepath) {
 		this.filepath = filepath;
 		texID = glGenTextures();
@@ -60,14 +65,25 @@ public class Texture {
 		stbi_image_free(image);
 	}
 
+	/**
+	 * Binds the texture to the current OpenGL context
+	 */
 	public void bind() {
 		glBindTexture(GL_TEXTURE_2D, texID);
 	}
 
+	/**
+	 * Unbinds the texture from the current OpenGL context
+	 */
 	public void unbind() {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
+	/**
+	 * The function returns the filepath of the file that was uploaded
+	 *
+	 * @return The filepath.
+	 */
 	public String getFilepath() {
 		return filepath;
 	}

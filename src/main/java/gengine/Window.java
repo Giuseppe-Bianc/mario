@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 00:20  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 11:57  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,30 +9,27 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
  ******************************************************************************/
 package gengine;
-
-// external
 
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import util.Time;
 
+import static java.util.Objects.*;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window {
-	private final int width;
-	private final int height;
+	private final int width, height;
 	private final String title;
 	private long glfwWindow;
 	public float r, g, b, a;
 	private static Window window = null;
-	private static gengine.Scene currentScene;
+	private static Scene currentScene;
 
 	private Window() {
 		this.width = 960;
@@ -41,10 +38,35 @@ public class Window {
 		this.r = this.b = this.g = this.a = 1;
 	}
 
+
 	/**
-	 * ritorna la finestra non nulla che rappresenta l' unica istanza possibile
+	 * Change the current scene to a new scene
 	 *
-	 * @return Window.window istanza della finestra
+	 * @param newScene The scene to switch to.
+	 */
+	public static void changeScene(int newScene) {
+		switch (newScene) {
+			case 0:
+				currentScene = new LevelEditorScene();
+				currentScene.init();
+				currentScene.start();
+				break;
+			case 1:
+				currentScene = new LevelScene();
+				currentScene.init();
+				currentScene.start();
+				break;
+			default:
+				assert false : "Unknown scene '" + newScene + "'";
+				break;
+		}
+	}
+
+
+	/**
+	 * It creates a singleton instance of the Window class.
+	 *
+	 * @return The Window object.
 	 */
 	public static Window get() {
 		if (Window.window == null) {
@@ -54,23 +76,9 @@ public class Window {
 		return Window.window;
 	}
 
-	public static void changeScene(int newScene) {
-		switch (newScene) {
-			case 0:
-				currentScene = new LevelEditorScene();
-				currentScene.init();
-				break;
-			case 1:
-				currentScene = new gengine.LevelScene();
-				currentScene.init();
-				break;
-			default:
-				assert false : "Unknown scene '" + newScene + "'";
-				break;
-		}
-	}
-
-
+	/**
+	 * Initialize the GLFW library, create a window, and start the main loop
+	 */
 	public void run() {
 		System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 		init();
@@ -78,9 +86,12 @@ public class Window {
 		glfwFreeCallbacks(glfwWindow);
 		glfwDestroyWindow(glfwWindow);
 		glfwTerminate();
-		java.util.Objects.requireNonNull(glfwSetErrorCallback(null)).free();
+		requireNonNull(glfwSetErrorCallback(null)).free();
 	}
 
+	/**
+	 * Set the window hint for the OpenGL context
+	 */
 	private static void setGlfwWindowHint() {
 		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
@@ -88,7 +99,7 @@ public class Window {
 	}
 
 	/**
-	 * responsabile per l' inizializzazione della finestra
+	 * Initialize the GLFW library and create a window
 	 */
 	public void init() {
 		GLFWErrorCallback.createPrint(System.err).set();
@@ -97,6 +108,14 @@ public class Window {
 		}
 
 		glfwDefaultWindowHints();
+		setGlfwWindowHint();
+
+		if (!glfwInit()) {
+			throw new IllegalStateException("Unable to initialize GLFW.");
+		}
+
+		glfwDefaultWindowHints();
+		setGlfwWindowHint();
 
 		glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
 		if (glfwWindow == NULL) {
@@ -115,7 +134,9 @@ public class Window {
 		Window.changeScene(0);
 	}
 
-
+	/**
+	 * It loops through the game loop.
+	 */
 	public void loop() {
 		float beginTime = Time.getTime();
 		float endTime;

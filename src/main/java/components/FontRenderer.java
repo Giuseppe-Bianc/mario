@@ -10,19 +10,19 @@
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
  ******************************************************************************/
-package gengine;
+package components;
 
-public class LevelScene extends Scene {
-	public LevelScene() {
-		System.out.println("Inside level scene");
-		Window.get().r = Window.get().g = Window.get().b = 1;
+import gengine.Component;
+
+public class FontRenderer extends Component {
+
+	@Override
+	public void start() {
+		if (gameObject.getComponent(SpriteRenderer.class) != null) {
+			System.out.println("Found Font Renderer!");
+		}
 	}
 
-	/**
-	 * Update the game state
-	 *
-	 * @param dt The time in seconds since the last update.
-	 */
 	@Override
 	public void update(float dt) {
 

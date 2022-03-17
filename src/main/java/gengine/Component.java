@@ -10,21 +10,21 @@
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
  ******************************************************************************/
+
 package gengine;
 
-public class LevelScene extends Scene {
-	public LevelScene() {
-		System.out.println("Inside level scene");
-		Window.get().r = Window.get().g = Window.get().b = 1;
+public abstract class Component {
+
+	public GameObject gameObject = null;
+
+	public void start() {
+
 	}
 
 	/**
-	 * Update the game state
+	 * The update function is called once per frame, and is where the game state is updated
 	 *
 	 * @param dt The time in seconds since the last update.
 	 */
-	@Override
-	public void update(float dt) {
-
-	}
+	public abstract void update(float dt);
 }

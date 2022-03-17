@@ -10,21 +10,25 @@
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
  ******************************************************************************/
-package gengine;
 
-public class LevelScene extends Scene {
-	public LevelScene() {
-		System.out.println("Inside level scene");
-		Window.get().r = Window.get().g = Window.get().b = 1;
+package components;
+
+import gengine.Component;
+
+public class SpriteRenderer extends Component {
+
+	private boolean firstTime = false;
+
+	@Override
+	public void start() {
+		System.out.println("I am starting");
 	}
 
-	/**
-	 * Update the game state
-	 *
-	 * @param dt The time in seconds since the last update.
-	 */
 	@Override
 	public void update(float dt) {
-
+		if (!firstTime) {
+			System.out.println("I am updating");
+			firstTime = true;
+		}
 	}
 }

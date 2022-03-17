@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  16/03/22, 22:40  Giuseppe-Bianc
+ Copyright (c)  17/03/22, 11:57  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,7 +9,6 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
  ******************************************************************************/
 
 package gengine;
@@ -22,19 +21,27 @@ public class Camera {
 	private Matrix4f projectionMatrix, viewMatrix;
 	public Vector2f position;
 
-	public Camera (Vector2f position) {
+	public Camera(Vector2f position) {
 		this.position = position;
 		this.projectionMatrix = new Matrix4f();
 		this.viewMatrix = new Matrix4f();
 		adjustProjection();
 	}
 
-	public void adjustProjection () {
+	/**
+	 * Adjust the projection matrix to match the current screen size
+	 */
+	public void adjustProjection() {
 		projectionMatrix.identity();
 		projectionMatrix.ortho(0.0f, 32.0f * 40.0f, 0.0f, 32.0f * 21.0f, 0.0f, 100.0f);
 	}
 
-	public Matrix4f getViewMatrix () {
+	/**
+	 * Get the view matrix for the camera.
+	 *
+	 * @return The view matrix.
+	 */
+	public Matrix4f getViewMatrix() {
 		Vector3f cameraFront = new Vector3f(0.0f, 0.0f, -1.0f);
 		Vector3f cameraUp = new Vector3f(0.0f, 1.0f, 0.0f);
 		this.viewMatrix.identity();
@@ -45,7 +52,12 @@ public class Camera {
 		return this.viewMatrix;
 	}
 
-	public Matrix4f getProjectionMatrix () {
+	/**
+	 * Returns the projection matrix
+	 *
+	 * @return The projection matrix.
+	 */
+	public Matrix4f getProjectionMatrix() {
 		return this.projectionMatrix;
 	}
 }
