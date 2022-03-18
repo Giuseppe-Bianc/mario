@@ -11,31 +11,28 @@
  all copies or substantial portions of the Software.
 
  ******************************************************************************/
-package components;
+package gengine;
 
-import gengine.Component;
-import org.joml.Vector4f;
+import org.joml.Vector2f;
 
-public class SpriteRenderer extends Component {
+public class Transform {
+	public Vector2f position;
+	public Vector2f scale;
 
-	private Vector4f color;
-
-	public SpriteRenderer(Vector4f color) {
-		this.color = color;
+	public Transform() {
+		this.init(new Vector2f(), new Vector2f());
 	}
 
-
-	@Override
-	public void start() {
-
+	public Transform(Vector2f position) {
+		this.init(position, new Vector2f());
 	}
 
-	@Override
-	public void update(float dt) {
-
+	public Transform(Vector2f position, Vector2f scale) {
+		this.init(position, scale);
 	}
 
-	public Vector4f getColor() {
-		return color;
+	public void init(Vector2f position, Vector2f scale) {
+		this.position = position;
+		this.scale = scale;
 	}
 }

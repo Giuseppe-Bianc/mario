@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 14:09  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -36,7 +36,8 @@ public class Window {
 		this.width = 960;
 		this.height = 540;
 		this.title = "Mario";
-		this.r = this.b = this.g = this.a = 1;
+		this.r = this.b = this.g = 0;
+		this.a = 1;
 	}
 
 
@@ -75,6 +76,15 @@ public class Window {
 		}
 
 		return Window.window;
+	}
+
+	/**
+	 * Returns the current scene
+	 *
+	 * @return currentScene The current scene.
+	 */
+	public static Scene getScene() {
+		return get().currentScene;
 	}
 
 	/**

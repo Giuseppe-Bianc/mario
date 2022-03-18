@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 20:53  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -29,10 +29,11 @@ import static org.lwjgl.opengl.GL20.*;
  */
 public class Shader {
 
-	private static final String ERR = "ERROR: '";
+	private static final String QT = "'", ERR = "ERROR: ", ERR2 = ERR + QT;
 	private static final String SPC = "'\n\t", LEND = "\r\n";
 	private static final String SCF = "shader compilation failed.";
 	private static final String TYP = "#type", VRT = "vertex", FRG = "fragment";
+	private static final String RNG = "a-z", UNT = "Unexpected token '";
 	private int shaderProgramID;
 	private boolean beingUsed = false;
 
@@ -47,7 +48,7 @@ public class Shader {
 		this.filepath = filepath;
 		try {
 			String source = new String(Files.readAllBytes(Paths.get(filepath)));
-			String[] splitString = source.split("(#type)( )+([a-zA-Z]+)");
+			String[] splitString = source.split("(" + TYP + ")( )+([" + RNG + RNG.toUpperCase() + "]+)");
 
 			int index = source.indexOf(TYP) + 6;
 			int eol = source.indexOf(LEND, index);
@@ -62,7 +63,7 @@ public class Shader {
 			} else if (firstPattern.equals(FRG)) {
 				fragmentSource = splitString[1];
 			} else {
-				throw new IOException("Unexpected token '" + firstPattern + "'");
+				throw new IOException(UNT + firstPattern + QT);
 			}
 
 			if (secondPattern.equals(VRT)) {
@@ -70,11 +71,11 @@ public class Shader {
 			} else if (secondPattern.equals(FRG)) {
 				fragmentSource = splitString[2];
 			} else {
-				throw new IOException("Unexpected token '" + secondPattern + "'");
+				throw new IOException(UNT + secondPattern + QT);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			assert false : "Error: Could not open file for shader: '" + filepath + "'";
+			assert false : ERR + "Could not open file for shader: '" + filepath + QT;
 		}
 	}
 
@@ -91,7 +92,7 @@ public class Shader {
 		int success = glGetShaderi(vertexID, GL_COMPILE_STATUS);
 		if (success == GL_FALSE) {
 			int len = glGetShaderi(vertexID, GL_INFO_LOG_LENGTH);
-			System.out.println(ERR + filepath + SPC + VRT + SCF);
+			System.out.println(ERR2 + filepath + SPC + VRT + SCF);
 			System.out.println(glGetShaderInfoLog(vertexID, len));
 			assert false : "";
 		}
@@ -103,7 +104,7 @@ public class Shader {
 		success = glGetShaderi(fragmentID, GL_COMPILE_STATUS);
 		if (success == GL_FALSE) {
 			int len = glGetShaderi(fragmentID, GL_INFO_LOG_LENGTH);
-			System.out.println(ERR + filepath + SPC + FRG + SCF);
+			System.out.println(ERR2 + filepath + SPC + FRG + SCF);
 			System.out.println(glGetShaderInfoLog(fragmentID, len));
 			assert false : "";
 		}
@@ -116,7 +117,7 @@ public class Shader {
 		success = glGetProgrami(shaderProgramID, GL_LINK_STATUS);
 		if (success == GL_FALSE) {
 			int len = glGetProgrami(shaderProgramID, GL_INFO_LOG_LENGTH);
-			System.out.println(ERR + filepath + SPC + "Linking of shaders failed.");
+			System.out.println(ERR2 + filepath + SPC + "Linking of shaders failed.");
 			System.out.println(glGetProgramInfoLog(shaderProgramID, len));
 			assert false : "";
 		}

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 20:53  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -14,39 +14,10 @@
 package gengine;
 
 import org.joml.Vector2f;
-import org.lwjgl.BufferUtils;
-import renderer.Shader;
-import renderer.Texture;
-import util.Time;
-
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
-
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
-import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class LevelEditorScene extends gengine.Scene {
 
-	private int vertexID, fragmentID, shaderProgram;
-
-	private final float[] vertexArray = {
-			100f, 0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1, 1,
-			0f, 100f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0, 0,
-			100f, 100f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f, 1, 0,
-			0f, 0f, 0.0f, 1.0f, 1.0f, 0.0f, 1.0f, 0, 1
-	};
-
-	private final int[] elementArray = {
-			2, 1, 0,
-			0, 1, 3
-	};
-
-	private int vaoID, vboID, eboID;
-
-	private static final String ASS = "assets/";
-	private Shader defaultShader;
-	private Texture testTexture;
+	private static final float UNN = 100.0f;
 
 	public LevelEditorScene() {
 
@@ -57,39 +28,27 @@ public class LevelEditorScene extends gengine.Scene {
 	 */
 	@Override
 	public void init() {
-		this.camera = new gengine.Camera(new Vector2f(-200, -300));
-		defaultShader = new Shader(ASS + "shaders/default.glsl");
-		defaultShader.compile();
-		this.testTexture = new Texture(ASS + "images/testImage.png");
-		vaoID = glGenVertexArrays();
-		glBindVertexArray(vaoID);
+		this.camera = new Camera(new Vector2f(-250, 0));
 
-		FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertexArray.length);
-		vertexBuffer.put(vertexArray).flip();
+		int xOffset = 10;
+		int yOffset = 10;
 
-		vboID = glGenBuffers();
-		glBindBuffer(GL_ARRAY_BUFFER, vboID);
-		glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
+		float totalWidth = (float) (600 - xOffset * 2);
+		float totalHeight = (float) (300 - yOffset * 2);
+		float sizeX = totalWidth / UNN;
+		float sizeY = totalHeight / UNN;
+		float padding = 3;
 
-		IntBuffer elementBuffer = BufferUtils.createIntBuffer(elementArray.length);
-		elementBuffer.put(elementArray).flip();
+		for (int x = 0; x < 100; x++) {
+			for (int y = 0; y < 100; y++) {
+				float xPos = xOffset + (x * sizeX) + (padding * x);
+				float yPos = yOffset + (y * sizeY) + (padding * y);
 
-		eboID = glGenBuffers();
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, elementBuffer, GL_STATIC_DRAW);
-
-		int positionsSize = 3;
-		int colorSize = 4;
-		int uvSize = 2;
-		int vertexSizeBytes = (positionsSize + colorSize + uvSize) * Float.BYTES;
-		glVertexAttribPointer(0, positionsSize, GL_FLOAT, false, vertexSizeBytes, 0);
-		glEnableVertexAttribArray(0);
-
-		glVertexAttribPointer(1, colorSize, GL_FLOAT, false, vertexSizeBytes, positionsSize * Float.BYTES);
-		glEnableVertexAttribArray(1);
-
-		glVertexAttribPointer(2, uvSize, GL_FLOAT, false, vertexSizeBytes, (positionsSize + colorSize) * Float.BYTES);
-		glEnableVertexAttribArray(2);
+				GameObject go = new GameObject("Obj" + x + "" + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
+				go.addComponent(new components.SpriteRenderer(new org.joml.Vector4f(xPos / totalWidth, yPos / totalHeight, 1, 1)));
+				this.addGameObjectToScene(go);
+			}
+		}
 	}
 
 	/**
@@ -101,25 +60,12 @@ public class LevelEditorScene extends gengine.Scene {
 	 */
 	@Override
 	public void update(float dt) {
-		defaultShader.use();
+		System.out.println("FPS: " + (1.0f / dt));
 
-		defaultShader.uploadTexture("TEX_SAMPLER", 0);
-		glActiveTexture(GL_TEXTURE0);
-		testTexture.bind();
+		for (GameObject go : this.gameObjects) {
+			go.update(dt);
+		}
 
-		defaultShader.uploadMat4f("uProjection", camera.getProjectionMatrix());
-		defaultShader.uploadMat4f("uView", camera.getViewMatrix());
-		defaultShader.uploadFloat("uTime", Time.getTime());
-		glBindVertexArray(vaoID);
-
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-
-		glDrawElements(GL_TRIANGLES, elementArray.length, GL_UNSIGNED_INT, 0);
-
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
-		glBindVertexArray(0);
-		defaultShader.detach();
+		this.renderer.render();
 	}
 }

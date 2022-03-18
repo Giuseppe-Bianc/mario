@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 14:09  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -13,11 +13,14 @@
  ******************************************************************************/
 package gengine;
 
+import renderer.Renderer;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Scene {
 
+	protected Renderer renderer = new Renderer();
 	protected Camera camera;
 	private boolean isRunning = false;
 	protected List<GameObject> gameObjects = new ArrayList<>();
@@ -39,6 +42,7 @@ public abstract class Scene {
 	public void start() {
 		for (GameObject go : gameObjects) {
 			go.start();
+			this.renderer.add(go);
 		}
 		isRunning = true;
 	}
@@ -54,6 +58,7 @@ public abstract class Scene {
 		} else {
 			gameObjects.add(go);
 			go.start();
+			this.renderer.add(go);
 		}
 	}
 
@@ -63,4 +68,14 @@ public abstract class Scene {
 	 * @param dt The time in seconds since the last update.
 	 */
 	public abstract void update(float dt);
+
+
+	/**
+	 * Returns the camera that is used to render the scene
+	 *
+	 * @return The camera object.
+	 */
+	public Camera camera() {
+		return this.camera;
+	}
 }

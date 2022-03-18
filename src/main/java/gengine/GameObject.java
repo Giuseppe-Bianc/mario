@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 14:09  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -20,10 +20,18 @@ public class GameObject {
 
 	private String name;
 	private List<Component> components;
+	public Transform transform;
 
 	public GameObject(String name) {
 		this.name = name;
 		this.components = new ArrayList<>();
+		this.transform = new Transform();
+	}
+
+	public GameObject(String name, Transform transform) {
+		this.name = name;
+		this.components = new ArrayList<>();
+		this.transform = transform;
 	}
 
 	/**
