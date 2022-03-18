@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 18:33  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 19:05  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,23 +9,19 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
- ******************************************************************************//
+ ******************************************************************************/
 package gengine;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 public class MouseListener {
 	private static MouseListener instance;
-	private double scrollX, scrollY;
-	private double xPos, yPos, lastY, lastX;
-	private boolean mouseButtonPressed[] = new boolean[3];
+	private double scrollX, scrollY, xPos, yPos, lastY, lastX;
+	private final boolean[] mouseButtonPressed = new boolean[3];
 	private boolean isDragging;
 
 	private MouseListener() {
-		this.scrollX = this.scrollY = 0.0;
-		this.xPos = this.yPos = 0.0;
-		this.lastX = this.lastY = 0.0;
+		this.scrollX = this.scrollY = this.xPos = this.yPos = this.lastX = this.lastY = 0.0;
 	}
 
 	/**
@@ -96,8 +92,7 @@ public class MouseListener {
 	 * This function is called at the end of each frame.
 	 */
 	public static void endFrame() {
-		get().scrollX = 0;
-		get().scrollY = 0;
+		get().scrollX = get().scrollY = 0;
 		get().lastX = get().xPos;
 		get().lastY = get().yPos;
 	}

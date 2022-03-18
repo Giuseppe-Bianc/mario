@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 18:33  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 19:05  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,7 +9,6 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
  ******************************************************************************/
 package gengine;
 
@@ -28,7 +27,7 @@ public class LevelEditorScene extends gengine.Scene {
 	 */
 	@Override
 	public void init() {
-		this.camera = new Camera(new Vector2f(-250, 0));
+		this.camera = new gengine.Camera(new Vector2f(-250, 0));
 
 		int xOffset = 10, yOffset = 10;
 
@@ -43,7 +42,7 @@ public class LevelEditorScene extends gengine.Scene {
 				float xPos = xOffset + (x * sizeX) + (padding * x);
 				float yPos = yOffset + (y * sizeY) + (padding * y);
 
-				GameObject go = new GameObject("Obj" + x + "" + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
+				gengine.GameObject go = new gengine.GameObject("Obj" + x + "" + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
 				go.addComponent(new components.SpriteRenderer(new org.joml.Vector4f(xPos / totalWidth, yPos / totalHeight, 1, 1)));
 				this.addGameObjectToScene(go);
 			}
@@ -62,7 +61,7 @@ public class LevelEditorScene extends gengine.Scene {
 	public void update(float dt) {
 		System.out.println("FPS: " + (1.0f / dt));
 
-		for (GameObject go : this.gameObjects) {
+		for (gengine.GameObject go : this.gameObjects) {
 			go.update(dt);
 		}
 

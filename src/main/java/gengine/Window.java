@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 18:33  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 19:05  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,7 +9,6 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
  ******************************************************************************/
 package gengine;
 
@@ -18,7 +17,7 @@ import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
 import util.Time;
 
-import static java.util.Objects.*;
+import static java.util.Objects.requireNonNull;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -48,12 +47,12 @@ public class Window {
 	public static void changeScene(int newScene) {
 		switch (newScene) {
 			case 0:
-				currentScene = new LevelEditorScene();
+				currentScene = new gengine.LevelEditorScene();
 				currentScene.init();
 				currentScene.start();
 				break;
 			case 1:
-				currentScene = new LevelScene();
+				currentScene = new gengine.LevelScene();
 				currentScene.init();
 				currentScene.start();
 				break;
@@ -149,9 +148,7 @@ public class Window {
 	 * It loops through the game loop.
 	 */
 	public void loop() {
-		float beginTime = Time.getTime();
-		float endTime;
-		float dt = -1.0f;
+		float beginTime = Time.getTime(), endTime, dt = -1.0f;
 
 		while (!glfwWindowShouldClose(glfwWindow)) {
 			glfwPollEvents();

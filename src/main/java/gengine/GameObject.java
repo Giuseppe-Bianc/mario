@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 18:33  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 19:05  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,7 +9,6 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
  ******************************************************************************/
 package gengine;
 
@@ -18,8 +17,8 @@ import java.util.List;
 
 public class GameObject {
 
-	private String name;
-	private List<Component> components;
+	private final String name;
+	private final List<Component> components;
 	public Transform transform;
 
 	public GameObject(String name) {
@@ -86,8 +85,8 @@ public class GameObject {
 	 * @param dt The time since the last update.
 	 */
 	public void update(float dt) {
-		for (int i = 0; i < components.size(); i++) {
-			components.get(i).update(dt);
+		for (Component component : components) {
+			component.update(dt);
 		}
 	}
 

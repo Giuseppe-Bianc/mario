@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 19:05  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,7 +9,6 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
-
  ******************************************************************************/
 package renderer;
 
@@ -33,14 +32,14 @@ public class RenderBatch {
 	private static final int VERTEX_SIZE = 6;
 	private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
-	private SpriteRenderer[] sprites;
+	private final SpriteRenderer[] sprites;
 	private int numSprites;
 	private boolean hasRoom;
-	private float[] vertices;
+	private final float[] vertices;
 
 	private int vaoID, vboID;
-	private int maxBatchSize;
-	private Shader shader;
+	private final int maxBatchSize;
+	private final Shader shader;
 
 	public RenderBatch(int maxBatchSize) {
 		shader = new Shader(SHPT);
@@ -59,7 +58,7 @@ public class RenderBatch {
 
 		vboID = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
-		glBufferData(GL_ARRAY_BUFFER, vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
 
 		int eboID = glGenBuffers();
 		int[] indices = generateIndices();
@@ -152,9 +151,9 @@ public class RenderBatch {
 		int offset = 4 * index;
 		elements[offsetArrayIndex] = offset + 3;
 		elements[offsetArrayIndex + 1] = offset + 2;
-		elements[offsetArrayIndex + 2] = offset + 0;
+		elements[offsetArrayIndex + 2] = offset;
 
-		elements[offsetArrayIndex + 3] = offset + 0;
+		elements[offsetArrayIndex + 3] = offset;
 		elements[offsetArrayIndex + 4] = offset + 2;
 		elements[offsetArrayIndex + 5] = offset + 1;
 	}
