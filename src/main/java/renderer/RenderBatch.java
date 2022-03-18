@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 19:05  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 19:11  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,6 +9,7 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
+
  ******************************************************************************/
 package renderer;
 
@@ -17,9 +18,11 @@ import gengine.Window;
 import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL20.glDisableVertexAttribArray;
+import static org.lwjgl.opengl.GL20.glEnableVertexAttribArray;
 import static org.lwjgl.opengl.GL20C.glVertexAttribPointer;
-import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL30.glBindVertexArray;
+import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class RenderBatch {
 	private static final boolean NRM = false;
@@ -39,10 +42,10 @@ public class RenderBatch {
 
 	private int vaoID, vboID;
 	private final int maxBatchSize;
-	private final Shader shader;
+	private final renderer.Shader shader;
 
 	public RenderBatch(int maxBatchSize) {
-		shader = new Shader(SHPT);
+		shader = new renderer.Shader(SHPT);
 		shader.compile();
 		this.sprites = new SpriteRenderer[maxBatchSize];
 		this.maxBatchSize = maxBatchSize;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 19:05  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 19:10  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -9,6 +9,7 @@
 
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
+
  ******************************************************************************/
 package gengine;
 
@@ -22,7 +23,7 @@ public abstract class Scene {
 	protected Renderer renderer = new Renderer();
 	protected Camera camera;
 	private boolean isRunning = false;
-	protected List<gengine.GameObject> gameObjects = new ArrayList<>();
+	protected List<GameObject> gameObjects = new ArrayList<>();
 
 	public Scene() {
 
