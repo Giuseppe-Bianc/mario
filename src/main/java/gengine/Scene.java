@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 18:33  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -30,14 +30,14 @@ public abstract class Scene {
 	}
 
 	/**
-	 * This function is called when the model is initialized.
+	 * This function is called when the game model is first started
 	 */
 	public void init() {
 
 	}
 
 	/**
-	 * Start all the game objects in the game
+	 * For each game object in the gameObjects array, call the start method on the game object
 	 */
 	public void start() {
 		for (GameObject go : gameObjects) {
@@ -63,12 +63,13 @@ public abstract class Scene {
 	}
 
 	/**
-	 * This function is called once per frame
+	 * "Update the game state."<p> The update function is called once per frame, and is where the
+	 * game logic is placed. This is where you define the rules of your game, and how your game
+	 * should react to different events
 	 *
 	 * @param dt The time in seconds since the last update.
 	 */
 	public abstract void update(float dt);
-
 
 	/**
 	 * Returns the camera that is used to render the scene

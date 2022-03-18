@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 18:33  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -92,7 +92,7 @@ public class GameObject {
 	}
 
 	/**
-	 * Start all the components in the system
+	 * For each component in the list of components, call the start() method on that component
 	 */
 	public void start() {
 		for (int i = 0; i < components.size(); i++) {

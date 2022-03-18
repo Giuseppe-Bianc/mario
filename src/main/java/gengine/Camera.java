@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 14:09  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 18:33  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -10,8 +10,7 @@
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
 
- ******************************************************************************/
-
+ ******************************************************************************//
 package gengine;
 
 import org.joml.Matrix4f;
@@ -30,7 +29,16 @@ public class Camera {
 	}
 
 	/**
-	 * Adjust the projection matrix to match the current screen size
+	 * The projection matrix is a 4x4 matrix that defines the transformation from 3D world space to
+	 * 2D screen space. <p> The ortho function sets up a projection matrix that defines a parallel
+	 * projection. <p> The first two parameters define the range of the x and y coordinates. <p> The
+	 * last two parameters define the near and far clipping planes. <p> The near and far clipping
+	 * planes are the minimum and maximum distances from the camera to the screen. <p> The near
+	 * clipping plane must be less than the far clipping plane.  <p> The near clipping plane must be
+	 * greater than zero.<p> The far clipping plane must be greater than the near clipping plane.<p>
+	 * The near and far clipping planes must be greater than zero.<p> The near and far clipping
+	 * planes must be less than 100.<p> The near and far clipping planes must be greater than zero.
+	 * <p>The near and far clipping planes must be
 	 */
 	public void adjustProjection() {
 		projectionMatrix.identity();
@@ -38,7 +46,8 @@ public class Camera {
 	}
 
 	/**
-	 * Get the view matrix for the camera.
+	 * This function returns a view matrix that is used to transform the world into the camera's
+	 * view
 	 *
 	 * @return The view matrix.
 	 */

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 18:33  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -40,7 +40,6 @@ public class Window {
 		this.a = 1;
 	}
 
-
 	/**
 	 * Change the current scene to a new scene
 	 *
@@ -66,7 +65,8 @@ public class Window {
 
 
 	/**
-	 * It creates a singleton instance of the Window class.
+	 * The get() function returns a singleton instance of the Window object if it exists, otherwise
+	 * it creates a new Window object and returns it
 	 *
 	 * @return The Window object.
 	 */

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 00:20  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 18:33  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -10,7 +10,7 @@
  The above copyright notice and this permission notice shall be included in
  all copies or substantial portions of the Software.
 
- ******************************************************************************/
+ ******************************************************************************//
 package gengine;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -23,6 +23,14 @@ public class KeyListener {
 
 	}
 
+	/**
+	 * The get() function is a static method that returns the singleton instance of the KeyListener
+	 * class.
+	 * <p>
+	 * If the instance has not been created yet, it creates it
+	 *
+	 * @return The instance of the KeyListener class.
+	 */
 	public static KeyListener get() {
 		if (KeyListener.instance == null) {
 			KeyListener.instance = new KeyListener();
@@ -31,6 +39,16 @@ public class KeyListener {
 		return KeyListener.instance;
 	}
 
+	/**
+	 * When a key is pressed, the keyPressed array is set to true for that key. When a key is
+	 * released, the keyPressed array is set to false for that key
+	 *
+	 * @param window   The window that received the event.
+	 * @param key      The key that was pressed or released.
+	 * @param scancode The scancode of the key.
+	 * @param action   The action the key triggered.
+	 * @param mods     A bitfield describing which modifier keys were held down.
+	 */
 	public static void keyCallback(long window, int key, int scancode, int action, int mods) {
 		if (action == GLFW_PRESS) {
 			get().keyPressed[key] = true;
@@ -39,6 +57,12 @@ public class KeyListener {
 		}
 	}
 
+	/**
+	 * Returns true if the specified key is pressed
+	 *
+	 * @param keyCode The key code of the key you want to check.
+	 * @return A boolean value.
+	 */
 	public static boolean isKeyPressed(int keyCode) {
 		return get().keyPressed[keyCode];
 	}

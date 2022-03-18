@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 18:33  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -25,16 +25,29 @@ public class SpriteRenderer extends Component {
 	}
 
 
+	/**
+	 * The start() function is called when the SpriteRenderer is started.
+	 */
 	@Override
 	public void start() {
 
 	}
 
+	/**
+	 * This function is called once per frame
+	 *
+	 * @param dt The time in seconds since the last update.
+	 */
 	@Override
 	public void update(float dt) {
 
 	}
 
+	/**
+	 * Returns the color of the light
+	 *
+	 * @return The color of the light.
+	 */
 	public Vector4f getColor() {
 		return color;
 	}

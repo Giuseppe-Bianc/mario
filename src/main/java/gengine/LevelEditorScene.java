@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
+ Copyright (c)  18/03/22, 18:33  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -30,8 +30,7 @@ public class LevelEditorScene extends gengine.Scene {
 	public void init() {
 		this.camera = new Camera(new Vector2f(-250, 0));
 
-		int xOffset = 10;
-		int yOffset = 10;
+		int xOffset = 10, yOffset = 10;
 
 		float totalWidth = (float) (600 - xOffset * 2);
 		float totalHeight = (float) (300 - yOffset * 2);
@@ -52,9 +51,10 @@ public class LevelEditorScene extends gengine.Scene {
 	}
 
 	/**
-	 * - Upload the texture to the GPU. - Upload the projection and view matrices to the GPU. -
-	 * Upload the time to the GPU. - Bind the VAO. - Enable the vertex and element array attributes.
-	 * - Draw the triangles. - Disable the vertex and element array attributes. - Unbind the VAO
+	 * Upload the texture to the GPU.<p> Upload the projection and view matrices to the GPU.<P>
+	 * Upload the time to the GPU.<P> Bind the VAO.<P> Enable the vertex and element array
+	 * attributes.<P> Draw the triangles. - Disable the vertex and element array attributes. -
+	 * Unbind the VAO.
 	 *
 	 * @param dt The time since the last update call.
 	 */
