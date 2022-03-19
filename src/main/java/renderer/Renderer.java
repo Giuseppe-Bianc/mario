@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
+ Copyright (c)  19/03/22, 16:37  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -27,7 +27,7 @@ public class Renderer {
 		this.batches = new ArrayList<>();
 	}
 
-	public void add(@org.jetbrains.annotations.NotNull GameObject go) {
+	public void add(GameObject go) {
 		SpriteRenderer spr = go.getComponent(SpriteRenderer.class);
 		if (spr != null) {
 			add(spr);
@@ -38,9 +38,12 @@ public class Renderer {
 		boolean added = false;
 		for (RenderBatch batch : batches) {
 			if (batch.hasRoom()) {
-				batch.addSprite(sprite);
-				added = true;
-				break;
+				Texture tex = sprite.getTexture();
+				if (tex == null || (batch.hasTexture(tex) || batch.hasTextureRoom())) {
+					batch.addSprite(sprite);
+					added = true;
+					break;
+				}
 			}
 		}
 

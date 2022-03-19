@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 16:53  Giuseppe-Bianc
+ Copyright (c)  19/03/22, 16:35  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -141,13 +141,14 @@ public class Shader {
 		beingUsed = false;
 	}
 
+
 	/**
 	 * It uploads a 4x4 matrix to the GPU
 	 *
 	 * @param varName The name of the variable in the shader program.
 	 * @param mat4    The matrix to upload.
 	 */
-	public void uploadMat4f(String varName, @org.jetbrains.annotations.NotNull Matrix4f mat4) {
+	public void uploadMat4f(String varName, Matrix4f mat4) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		FloatBuffer matBuffer = BufferUtils.createFloatBuffer(16);
@@ -161,7 +162,7 @@ public class Shader {
 	 * @param varName The name of the variable in the shader program.
 	 * @param mat3    The matrix to upload.
 	 */
-	public void uploadMat3f(String varName, @org.jetbrains.annotations.NotNull Matrix3f mat3) {
+	public void uploadMat3f(String varName, Matrix3f mat3) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		FloatBuffer matBuffer = BufferUtils.createFloatBuffer(9);
@@ -169,13 +170,14 @@ public class Shader {
 		glUniformMatrix3fv(varLocation, false, matBuffer);
 	}
 
+
 	/**
 	 * Uploads a Vector4f to the shader
 	 *
 	 * @param varName The name of the variable in the shader program.
 	 * @param vec     The vector to upload.
 	 */
-	public void uploadVec4f(String varName, @org.jetbrains.annotations.NotNull Vector4f vec) {
+	public void uploadVec4f(String varName, Vector4f vec) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform4f(varLocation, vec.x, vec.y, vec.z, vec.w);
@@ -187,11 +189,12 @@ public class Shader {
 	 * @param varName The name of the variable in the shader program.
 	 * @param vec     The vector to upload.
 	 */
-	public void uploadVec3f(String varName, @org.jetbrains.annotations.NotNull Vector3f vec) {
+	public void uploadVec3f(String varName, Vector3f vec) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform3f(varLocation, vec.x, vec.y, vec.z);
 	}
+
 
 	/**
 	 * Uploads a Vector2f to the shader
@@ -199,7 +202,7 @@ public class Shader {
 	 * @param varName The name of the variable in the shader program.
 	 * @param vec     The vector to upload.
 	 */
-	public void uploadVec2f(String varName, @org.jetbrains.annotations.NotNull Vector2f vec) {
+	public void uploadVec2f(String varName, Vector2f vec) {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform2f(varLocation, vec.x, vec.y);
@@ -239,6 +242,12 @@ public class Shader {
 		int varLocation = glGetUniformLocation(shaderProgramID, varName);
 		use();
 		glUniform1i(varLocation, slot);
+	}
+
+	public void uploadIntArray(String varName, int[] array) {
+		int varLocation = glGetUniformLocation(shaderProgramID, varName);
+		use();
+		glUniform1iv(varLocation, array);
 	}
 }
 

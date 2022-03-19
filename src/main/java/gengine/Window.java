@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 19:10  Giuseppe-Bianc
+ Copyright (c)  19/03/22, 16:53  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -16,7 +16,6 @@ package gengine;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
-import util.Time;
 
 import static java.util.Objects.requireNonNull;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
@@ -149,7 +148,7 @@ public class Window {
 	 * It loops through the game loop.
 	 */
 	public void loop() {
-		float beginTime = Time.getTime(), endTime, dt = -1.0f;
+		float beginTime = (float) glfwGetTime(), endTime, dt = -1.0f;
 
 		while (!glfwWindowShouldClose(glfwWindow)) {
 			glfwPollEvents();
@@ -163,7 +162,7 @@ public class Window {
 
 			glfwSwapBuffers(glfwWindow);
 
-			endTime = Time.getTime();
+			endTime = (float) glfwGetTime();
 			dt = endTime - beginTime;
 			beginTime = endTime;
 		}

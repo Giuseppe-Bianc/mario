@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 19:10  Giuseppe-Bianc
+ Copyright (c)  19/03/22, 22:22  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -13,11 +13,19 @@
  ******************************************************************************/
 package gengine;
 
+import components.SpriteRenderer;
+import components.Spritesheet;
 import org.joml.Vector2f;
+import util.AssetPool;
 
-public class LevelEditorScene extends gengine.Scene {
+import static org.lwjgl.glfw.GLFW.*;
 
-	private static final float UNN = 100.0f;
+public class LevelEditorScene extends Scene {
+
+	private static final String PR = "assets/", OBJP = "Object ";
+	private static final String PRT = PR + "images/", TIM = PRT + "testImage.png";
+	private static final String SHPT = PR + "shaders/default.glsl", TIM2 = PRT + "testImage2.png";
+	private static final int UNN = 100;
 
 	public LevelEditorScene() {
 
@@ -28,26 +36,26 @@ public class LevelEditorScene extends gengine.Scene {
 	 */
 	@Override
 	public void init() {
-		this.camera = new gengine.Camera(new Vector2f(-250, 0));
+		loadResources();
+		this.camera = new Camera(new Vector2f(-250, 0));
 
-		int xOffset = 10, yOffset = 10;
+		Spritesheet sprites = AssetPool.getSpritesheet(PRT + "spritesheet.png");
 
-		float totalWidth = (float) (600 - xOffset * 2);
-		float totalHeight = (float) (300 - yOffset * 2);
-		float sizeX = totalWidth / UNN;
-		float sizeY = totalHeight / UNN;
-		float padding = 3;
+		GameObject obj1 = new GameObject(OBJP + "1", new Transform(new Vector2f(UNN, UNN), new Vector2f(UNN, UNN)));
+		obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));
+		this.addGameObjectToScene(obj1);
 
-		for (int x = 0; x < 100; x++) {
-			for (int y = 0; y < 100; y++) {
-				float xPos = xOffset + (x * sizeX) + (padding * x);
-				float yPos = yOffset + (y * sizeY) + (padding * y);
+		GameObject obj2 = new GameObject(OBJP + "2", new Transform(new Vector2f(UNN * 4, UNN), new Vector2f(UNN, UNN)));
+		obj2.addComponent(new SpriteRenderer(sprites.getSprite(7)));
+		this.addGameObjectToScene(obj2);
 
-				gengine.GameObject go = new gengine.GameObject("Obj" + x + "" + y, new Transform(new Vector2f(xPos, yPos), new Vector2f(sizeX, sizeY)));
-				go.addComponent(new components.SpriteRenderer(new org.joml.Vector4f(xPos / totalWidth, yPos / totalHeight, 1, 1)));
-				this.addGameObjectToScene(go);
-			}
-		}
+	}
+
+	private void loadResources() {
+		AssetPool.getShader(SHPT);
+
+		AssetPool.addSpritesheet(PRT + "spritesheet.png", new components.Spritesheet(AssetPool.getTexture(PRT + "spritesheet.png"),
+				16, 16, 26, 0));
 	}
 
 	/**
@@ -60,9 +68,18 @@ public class LevelEditorScene extends gengine.Scene {
 	 */
 	@Override
 	public void update(float dt) {
-		System.out.println("FPS: " + (1.0f / dt));
+		if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT)) {
+			camera.position.x += 100f * dt;
+		} else if (KeyListener.isKeyPressed(GLFW_KEY_LEFT)) {
+			camera.position.x -= 100f * dt;
+		}
+		if (KeyListener.isKeyPressed(GLFW_KEY_UP)) {
+			camera.position.y += 100f * dt;
+		} else if (KeyListener.isKeyPressed(GLFW_KEY_DOWN)) {
+			camera.position.y -= 100f * dt;
+		}
 
-		for (gengine.GameObject go : this.gameObjects) {
+		for (GameObject go : this.gameObjects) {
 			go.update(dt);
 		}
 

@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 19:10  Giuseppe-Bianc
+ Copyright (c)  19/03/22, 15:45  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -14,16 +14,24 @@
 package components;
 
 import gengine.Component;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
+import renderer.Texture;
 
 public class SpriteRenderer extends Component {
 
-	private final Vector4f color;
+	private Vector4f color;
+	private Sprite sprite;
 
 	public SpriteRenderer(Vector4f color) {
 		this.color = color;
+		this.sprite = new Sprite(null);
 	}
 
+	public SpriteRenderer(Sprite sprite) {
+		this.sprite = sprite;
+		this.color = new Vector4f(1, 1, 1, 1);
+	}
 
 	/**
 	 * The start() function is called when the SpriteRenderer is started.
@@ -49,6 +57,15 @@ public class SpriteRenderer extends Component {
 	 * @return The color of the light.
 	 */
 	public Vector4f getColor() {
-		return color;
+		return this.color;
+	}
+
+	public Texture getTexture() {
+		return sprite.getTexture();
+	}
+
+	public Vector2f[] getTexCoords() {
+		return sprite.getTexCoords();
 	}
 }
+

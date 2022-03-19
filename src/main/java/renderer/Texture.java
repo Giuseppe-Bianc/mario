@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  17/03/22, 20:53  Giuseppe-Bianc
+ Copyright (c)  19/03/22, 16:24  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -20,10 +20,13 @@ import java.nio.IntBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.stb.STBImage.*;
+import static java.util.Objects.requireNonNull;
 
 public class Texture {
+	private static final boolean FLS = false;
 	private final String filepath;
 	private final int texID;
+	private int width, height;
 	private static final String ERT = "Error: (Texture) ";
 
 	/**
@@ -48,9 +51,12 @@ public class Texture {
 		IntBuffer width = BufferUtils.createIntBuffer(1);
 		IntBuffer height = BufferUtils.createIntBuffer(1);
 		IntBuffer channels = BufferUtils.createIntBuffer(1);
+		stbi_set_flip_vertically_on_load(!FLS);
 		ByteBuffer image = stbi_load(filepath, width, height, channels, 0);
-
 		if (image != null) {
+			this.width = width.get(0);
+			this.height = height.get(0);
+
 			if (channels.get(0) == 3) {
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width.get(0), height.get(0),
 						0, GL_RGB, GL_UNSIGNED_BYTE, image);
@@ -58,13 +64,13 @@ public class Texture {
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width.get(0), height.get(0),
 						0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 			} else {
-				assert false : ERT + "Unknown number of channels '" + channels.get(0) + "'";
+				assert FLS : ERT + "Unknown number of channels '" + channels.get(0) + "'";
 			}
 		} else {
-			assert false : ERT + "Could not load image '" + filepath + "'";
+			assert FLS : ERT + "Could not load image '" + filepath + "'";
 		}
 
-		stbi_image_free(image);
+		stbi_image_free(requireNonNull(image));
 	}
 
 	/**
@@ -81,6 +87,7 @@ public class Texture {
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
+
 	/**
 	 * The function returns the filepath of the file that was uploaded
 	 *
@@ -89,4 +96,15 @@ public class Texture {
 	public String getFilepath() {
 		return filepath;
 	}
+
+
+	public int getWidth() {
+		return this.width;
+	}
+
+	public int getHeight() {
+		return this.height;
+	}
+
+
 }
