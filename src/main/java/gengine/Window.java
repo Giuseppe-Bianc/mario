@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  19/03/22, 16:53  Giuseppe-Bianc
+ Copyright (c)  20/03/22, 15:19  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -35,7 +35,9 @@ public class Window {
 		this.width = 960;
 		this.height = 540;
 		this.title = "Mario";
-		this.r = this.b = this.g = 0;
+		this.r = 0.7f;
+		this.b = 0.2f;
+		this.g = 0.1f;
 		this.a = 1;
 	}
 
@@ -47,12 +49,12 @@ public class Window {
 	public static void changeScene(int newScene) {
 		switch (newScene) {
 			case 0:
-				currentScene = new gengine.LevelEditorScene();
+				currentScene = new LevelEditorScene();
 				currentScene.init();
 				currentScene.start();
 				break;
 			case 1:
-				currentScene = new gengine.LevelScene();
+				currentScene = new LevelScene();
 				currentScene.init();
 				currentScene.start();
 				break;

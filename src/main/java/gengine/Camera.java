@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 19:10  Giuseppe-Bianc
+ Copyright (c)  20/03/22, 13:00  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -17,10 +17,21 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
+/**
+ * @author Giuseppe-Bianc
+ */
 public class Camera {
 	private final Matrix4f projectionMatrix, viewMatrix;
+	/**
+	 * camera position
+	 */
 	public Vector2f position;
 
+	/**
+	 * basic Camera constructor
+	 *
+	 * @param position the position of the camera itself
+	 */
 	public Camera(Vector2f position) {
 		this.position = position;
 		this.projectionMatrix = new Matrix4f();

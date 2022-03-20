@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  19/03/22, 16:55  Giuseppe-Bianc
+ Copyright (c)  20/03/22, 16:02  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -39,5 +39,39 @@ public class Transform {
 	public void init(Vector2f position, Vector2f scale) {
 		this.position = position;
 		this.scale = scale;
+	}
+
+	/**
+	 * Creates a new Transform object with the same position and scale as this Transform
+	 *
+	 * @return A new Transform object.
+	 */
+	public Transform copy() {
+		return new Transform(new Vector2f(this.position), new Vector2f(this.scale));
+	}
+
+	/**
+	 * Copy the position and scale of this Transform to another Transform
+	 *
+	 * @param to The Transform to copy the values to.
+	 */
+	public void copy(Transform to) {
+		to.position.set(this.position);
+		to.scale.set(this.scale);
+	}
+
+	/**
+	 * Returns true if the given object is equal to this object
+	 *
+	 * @param o the object to compare against
+	 * @return true if the position and the scale are  equals, false if null and if not instance of
+	 * Transform.
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) return false;
+		if (!(o instanceof Transform t)) return false;
+
+		return t.position.equals(this.position) && t.scale.equals(this.scale);
 	}
 }

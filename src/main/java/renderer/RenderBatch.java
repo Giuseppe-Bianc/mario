@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  19/03/22, 16:48  Giuseppe-Bianc
+ Copyright (c)  20/03/22, 12:51  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -43,16 +43,16 @@ public class RenderBatch {
 	private final int VERTEX_SIZE = 9;
 	private final int VERTEX_SIZE_BYTES = VERTEX_SIZE * Float.BYTES;
 
-	private SpriteRenderer[] sprites;
+	private final SpriteRenderer[] sprites;
 	private int numSprites;
 	private boolean hasRoom;
 	private final float[] vertices;
-	private int[] texSlots = {0, 1, 2, 3, 4, 5, 6, 7};
+	private final int[] texSlots = {0, 1, 2, 3, 4, 5, 6, 7};
 
-	private List<Texture> textures;
+	private final List<Texture> textures;
 	private int vaoID, vboID;
-	private int maxBatchSize;
-	private Shader shader;
+	private final int maxBatchSize;
+	private final Shader shader;
 
 
 	public RenderBatch(int maxBatchSize) {
@@ -110,7 +110,6 @@ public class RenderBatch {
 		glBindBuffer(GL_ARRAY_BUFFER, vboID);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
 
-		// Use shader
 		shader.use();
 		shader.uploadMat4f("uProjection", Window.getScene().camera().getProjectionMatrix());
 		shader.uploadMat4f("uView", Window.getScene().camera().getViewMatrix());
@@ -130,8 +129,8 @@ public class RenderBatch {
 		glDisableVertexAttribArray(1);
 		glBindVertexArray(0);
 
-		for (int i = 0; i < textures.size(); i++) {
-			textures.get(i).unbind();
+		for (Texture texture : textures) {
+			texture.unbind();
 		}
 		shader.detach();
 	}
@@ -154,14 +153,14 @@ public class RenderBatch {
 			}
 		}
 
-		float xAdd = 1.0f, yAdd = xAdd;
+		float xAdd = 1.f, yAdd = 1.f;
 		for (int i = 0; i < 4; i++) {
 			if (i == 1) {
-				yAdd = 0.0f;
+				yAdd = .0f;
 			} else if (i == 2) {
-				xAdd = 0.0f;
+				xAdd = .0f;
 			} else if (i == 3) {
-				yAdd = 1.0f;
+				yAdd = 1.f;
 			}
 
 			vertices[offset] = sprite.gameObject.transform.position.x + (xAdd * sprite.gameObject.transform.scale.x);
@@ -192,8 +191,8 @@ public class RenderBatch {
 		int offset = 4 * index;
 		elements[offsetArrayIndex] = offset + 3;
 		elements[offsetArrayIndex + 1] = offset + 2;
-		elements[offsetArrayIndex + 2] = offset + 0;
-		elements[offsetArrayIndex + 3] = offset + 0;
+		elements[offsetArrayIndex + 2] = offset;
+		elements[offsetArrayIndex + 3] = offset;
 		elements[offsetArrayIndex + 4] = offset + 2;
 		elements[offsetArrayIndex + 5] = offset + 1;
 	}

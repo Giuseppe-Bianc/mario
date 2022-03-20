@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  19/03/22, 22:22  Giuseppe-Bianc
+ Copyright (c)  20/03/22, 14:59  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -13,8 +13,7 @@
  ******************************************************************************/
 package gengine;
 
-import components.SpriteRenderer;
-import components.Spritesheet;
+import components.*;
 import org.joml.Vector2f;
 import util.AssetPool;
 

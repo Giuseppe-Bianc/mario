@@ -1,5 +1,5 @@
 /*******************************************************************************
- Copyright (c)  18/03/22, 19:10  Giuseppe-Bianc
+ Copyright (c)  20/03/22, 13:11  Giuseppe-Bianc
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
@@ -16,18 +16,35 @@ package gengine;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Giuseppe-Bianc
+ */
 public class GameObject {
 
 	private final String name;
 	private final List<Component> components;
+	/**
+	 * transform
+	 */
 	public Transform transform;
 
+	/**
+	 * simple GameObject constructor
+	 *
+	 * @param name name of the GameObject
+	 */
 	public GameObject(String name) {
 		this.name = name;
 		this.components = new ArrayList<>();
 		this.transform = new Transform();
 	}
 
+	/**
+	 * simple GameObject constructor
+	 *
+	 * @param name      name of the GameObject
+	 * @param transform simple transform
+	 */
 	public GameObject(String name, Transform transform) {
 		this.name = name;
 		this.components = new ArrayList<>();
